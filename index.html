@@ -65,7 +65,7 @@
 		}
 		
 		.bigChartText {
-			font-size: 14px;
+			font-size: 12px;
 			text-align: justify;
 		}
 		
@@ -112,7 +112,7 @@
 	<div class="chartWrapper">
 		<div id="cont" class="container-fluid">
 		
-			<h1 style="padding-bottom: 30px; color: #8F8F8F;"><span style="color: #4A4A4A;">C</span>hange <span style="color: #4A4A4A;">A</span>doption <span style="color: #4A4A4A;">P</span>rofiles</h1>
+			<h1 style="padding-bottom: 20px; color: #8F8F8F;"><span style="color: #4A4A4A;">C</span>hange <span style="color: #4A4A4A;">A</span>doption <span style="color: #4A4A4A;">P</span>rofiles</h1>
 			
 			<div class="row">
 				<div class="col-sm-8 column">
@@ -134,7 +134,10 @@
 					<div class="row" style="padding-top: 10px;">
 						<div class="col-sm-12 column">
 							<span class="bigChartText">
-							CAP text</span>
+							14% of the respondents are 'Observers'. Employees in this segment feel fairly comfortable with change within the organization but feel less confident with 
+							change and do not actively plan to participate in change activities. Due to the small segment size and moderate positive perceptions of this segment, large
+							investments in targeted interventions are less likely to reap large gains in technology adoption. Organization wide change and engagement activities should
+							suffice to keep this segment involved in the change process.</span>
 						</div>
 					</div>
 					
@@ -539,8 +542,8 @@ addedText["peloton"] = "34% of the respondents (the largest profile segment) are
 					   "and utilizing this segment as technology support agents or 'super users' that help to guide others with new technology.";
 addedText["rookies"] = "14% of the respondents are 'Rookies'. Employees in this segment are in the early stages of their career and experience less work autonomy than others. " +
 					   "They feel comfortable with change within the organization and have a slightly above average preference to try out new technology. A changing organization " +
-					   "can meet this segments’ needs by involving them in the latest technology releases along with the 'Peloton” segment and empowering them to become familiar " +
-					   "with technology before it is shared with a broader audience. Adding gamification components to get them familiar with new technology is also likely to appeal to this age demographic.";
+					   "can meet this segments’ needs by involving them in the latest technology releases along with the 'Peloton' segment and empowering them to become familiar " +
+					   "with technology before it is shared with a broader audience. Adding gamification components to get them familiar with new technology is also likely to appeal.";
 addedText["laggards"] = "20% of the respondents are 'Technology laggards'. Employees in this segment adopt technology slowly and are relatively uncomfortable with change within the " + 
 						"organization. A changing organization can support this segment by keeping technology explanations short and simple (KISS). Make sure to include this segment " +
 						"when all bugs are fixed and clearly communicate about go-to options (person/contact details/help line) for support.";
@@ -550,8 +553,8 @@ addedText["observers"] = "14% of the respondents are 'Observers'. Employees in t
 						 "suffice to keep this segment involved in the change process.";
 addedText["defensive"] = "6% of the respondents are part of the 'Defensive line'. Employees in this segment feel uncomfortable with change within the organization, are less engaged and do not " +
 						 "intend to actively support change activities. This segment has less positive perceptions of most aspects of their employment experience and targeted interventions toward " +
-						 "technology behavior are not likely to address underlying issues experienced by this segment. A changing organization should focus their change effort on the other segments " +
-					     "to increased adoption rates. Broader interventions should be reviewed with HR to address the experiences of this segment.";
+						 "technology behavior are not likely to address underlying issues experienced by this segment. A changing organization should focus their change effort on the other segments. " +
+					     "Broader interventions should be reviewed with HR to address the experiences of this segment.";
 addedText["caps"] = "Text explaining CAPs";
 
 ////////////////////////////////////////////////////////////// 
@@ -984,10 +987,10 @@ var CAPByName = [];
 for(var i = 0; i < CAPnames.length; i++ ) CAPByName[CAPnames[i]] = CAPnamesFull[i];
 
 //Adjust sizes of the small boxes at the bottom
-var docHeight = $(window).height();
-var footerHeight = $('#smallBoxes').height();
-var footerTop = $('#smallBoxes').position().top + footerHeight;
-$('#smallBoxes').css('margin-top', -50 + (docHeight - footerTop) + 'px');
+var docHeight = $(window).height(),
+	footerHeight = $('#smallBoxes').height(),
+	footerTop = $('#smallBoxes').position().top + footerHeight;
+$('#smallBoxes').css('margin-top', Math.max(0, -50 + (docHeight - footerTop)) + 'px');
 
 //Adjust the width of the image
 var imgWidth = $('.imgDiv').width();
@@ -997,11 +1000,11 @@ $('.CAPimage').css('margin-top', (($('.extraInsights').height() - $('.CAPimage')
 function clickFunction(chosen) {
 	
 	if (chosen === undefined) var chosen = idByName[d3.select(this).attr("class")];
-		
+
 	//Change the text and titles
 	d3.select(".bigChartTitle").html(CAPByName[chosen]);
 	d3.select(".bigChartText").html(addedText[chosen]);
-	
+	//Change the image and place in center of div
 	d3.select(".CAPimage").transition().duration(400).style("opacity", 0);
 	setTimeout( function() { 
 		d3.select(".CAPimage").attr("src", "img/" + chosen + ".png");
