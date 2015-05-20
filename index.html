@@ -131,7 +131,7 @@
 							<div class="extraInsights"></div>
 						</div>
 					</div>
-					<div class="row" style="padding-top: 10px;">
+					<div class="row" style="padding-top: 0px;">
 						<div class="col-sm-12 column">
 							<span class="bigChartText">
 							14% of the respondents are 'Observers'. Employees in this segment feel fairly comfortable with change within the organization but feel less confident with 
@@ -147,7 +147,7 @@
 			
 
 			<div class="row" id="smallBoxes" style="padding: 0px;">
-				<hr style="margin-bottom: 20px;">
+				<hr style="margin-bottom: 10px;">
 				<div class="col-sm-2 column">
 					<h4>Frontrunners</h4>
 					<hr style="border-top: 1px solid #6363FF;">
@@ -227,9 +227,11 @@
 				</div>	
 			</div>
 			
+			<!--
 			<div class="row text-center">
 				<div class="attribution">Deloitte  |  Workforce Analytics</div>
 			</div>
+			-->
 	
 		</div>
 	</div>
@@ -728,7 +730,7 @@ RadarChart.draw(".bigChartB", behaviorCAPs, bigChartOptionsB);
 
 var marginExtra = {top: 10, right: 40, bottom: 10, left: 10},
     widthExtra = $(".extraInsights").width() - marginExtra.left - marginExtra.right,
-    heightExtra = 265;
+    heightExtra = 250;
 
 var extraChartsSVG = d3.select(".extraInsights").append("svg")
 	.attr("width",  widthExtra + marginExtra.left + marginExtra.right)
@@ -816,7 +818,7 @@ var rangeYearsAtCompany = [2, 8];
 var medianYearsAtCompany = [6.9, 5.0, 4.6, 5.9, 4.9, 5.4];
 
 var years = extraCharts.append("g").attr("class", "extraCharts years")
-		.attr("transform", "translate(" + 0 + "," + 125 + ")");
+		.attr("transform", "translate(" + 0 + "," + 120 + ")");
 
 var yearsScale = d3.scale.linear()
 		.range([0, widthExtra])
@@ -887,7 +889,7 @@ var rangeJobLevel = [1,4];
 var medianJobLevel = [3.55, 2.56, 1.87, 2.54, 2.09, 2.47];
 
 var level = extraCharts.append("g").attr("class", "extraCharts level")
-		.attr("transform", "translate(" + 0 + "," + 225 + ")");
+		.attr("transform", "translate(" + 0 + "," + 215 + ")");
 
 var levelScale = d3.scale.linear()
 		.range([0, widthExtra])
@@ -990,7 +992,7 @@ for(var i = 0; i < CAPnames.length; i++ ) CAPByName[CAPnames[i]] = CAPnamesFull[
 var docHeight = $(window).height(),
 	footerHeight = $('#smallBoxes').height(),
 	footerTop = $('#smallBoxes').position().top + footerHeight;
-$('#smallBoxes').css('margin-top', Math.max(0, -50 + (docHeight - footerTop)) + 'px');
+$('#smallBoxes').css('margin-top', Math.max(0, (docHeight - footerTop) - 10) + 'px');
 
 //Adjust the width of the image
 var imgWidth = $('.imgDiv').width();
@@ -1003,13 +1005,20 @@ function clickFunction(chosen) {
 
 	//Change the text and titles
 	d3.select(".bigChartTitle").html(CAPByName[chosen]);
-	d3.select(".bigChartText").html(addedText[chosen]);
+	d3.select(".bigChartText").transition().duration(400).style("opacity", 0);
 	//Change the image and place in center of div
 	d3.select(".CAPimage").transition().duration(400).style("opacity", 0);
 	setTimeout( function() { 
 		d3.select(".CAPimage").attr("src", "img/" + chosen + ".png");
 		$('.CAPimage').css('margin-top', (($('.extraInsights').height() - $('.CAPimage').height())/2) + 'px'); 
+		
+		//Change the text and then change the position of the bottom charts, so visibly they stay in the same location
+		d3.select(".bigChartText").html(addedText[chosen]);
+		footerTop = $('#smallBoxes').position().top + footerHeight;
+		$('#smallBoxes').css('margin-top', Math.max(0, (docHeight - footerTop) - 10) + 'px');
+
 	}, 400);
+	d3.select(".bigChartText").transition().duration(400).delay(500).style("opacity", 1);
 	d3.select(".CAPimage").transition().duration(400).delay(500).style("opacity", 1);
 	
 	
