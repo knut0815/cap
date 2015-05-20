@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<title>Change Adoption Profiler</title>
+
+	<!-- Google fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+	
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+		
+	<!-- jQuery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Bootstrap 3 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<!-- jQuery timer -->
+	<script src="js/jquery.timer.js"></script>
+
+	<style>
+		body {
+		  font-family: 'Open Sans', sans-serif;
+		  font-size: 10px;
+		  font-weight: 300;
+		  color: #969696;
+		}
+
+		.chartWrapper {
+			padding: 10px 10px;
+		}
+			
+		.titles, h1, h2, h3, h4 {
+			font-family: 'Montserrat', sans-serif;
+			text-align: center;
+			color: #525252;
+		}
+
+		h1 {
+		  margin-bottom: 10px;
+		  text-align: center;
+		  font-size: 44px;
+		}
+
+		h6 {
+		  margin-top: 0px;
+		  margin-bottom: 10px;
+		}
+
+		hr {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+		
+		#imgDiv img {
+			display:block;
+			margin:auto;
+		}
+
+		.attribution{
+			font-size: 11px;
+			padding-top: 15px;
+			text-align: center;
+			text-transform: uppercase;
+		}
+		
+		.bigChartText {
+			font-size: 14px;
+			text-align: justify;
+		}
+		
+		.extraLine {
+			fill: none;
+			stroke: #DCDCDC;
+			shape-rendering: crispEdges;
+		}
+		
+		.extraTitle {
+			text-anchor: start;
+			font-family: 'Montserrat', sans-serif;
+			font-size: 12px;
+			fill: #8C8C8C;
+		}
+		
+		.extraText {
+			text-anchor: middle;
+		}
+
+		/*Vertical divider*/
+		/*
+		.row.vertical-divider {
+		  overflow: hidden;
+		}
+		.row.vertical-divider > div[class^="col-"] {
+		  text-align: center;
+		  padding-bottom: 100px;
+		  margin-bottom: -100px;
+		  border: 0px;
+		  border-left: 1px solid #eee;
+		}
+		.row.vertical-divider div[class^="col-"]:first-child {
+		  border-left: none;
+		}
+		.row.vertical-divider div[class^="col-"]:last-child {
+		  border-right: none;
+		}
+		*/
+    </style>
+</head>
+<body>
+
+	<div class="chartWrapper">
+		<div id="cont" class="container-fluid">
+		
+			<h1 style="padding-bottom: 30px; color: #8F8F8F;"><span style="color: #4A4A4A;">C</span>hange <span style="color: #4A4A4A;">A</span>doption <span style="color: #4A4A4A;">P</span>rofiles</h1>
+			
+			<div class="row">
+				<div class="col-sm-8 column">
+					<div class="row text-center">
+						<div class="col-sm-6 column text-center"><div class="bigChartF"></div></div>
+						<div class="col-sm-6 column text-center"><div class="bigChartB"></div></div>
+					</div>
+				</div>
+				<div class="col-sm-4 column">
+					<div class="row">
+						<h2 class="bigChartTitle" style="padding-bottom: 20px;">The CAPs</h2>
+						<div class="col-sm-2 column text-center imgDiv">
+							<img class = "CAPimage" width = 90 src="img/caps.png"/>
+						</div>
+						<div class="col-sm-10 column">
+							<div class="extraInsights"></div>
+						</div>
+					</div>
+					<div class="row" style="padding-top: 10px;">
+						<div class="col-sm-12 column">
+							<span class="bigChartText">
+							CAP text</span>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			
+
+			<div class="row" id="smallBoxes" style="padding: 0px;">
+				<hr style="margin-bottom: 20px;">
+				<div class="col-sm-2 column">
+					<h4>Frontrunners</h4>
+					<hr style="border-top: 1px solid #6363FF;">
+					<div class="col-sm-6 column text-center">
+						<div class="chart frontrunners factor"></div>
+						<h6>Survey</h6>
+					</div>
+					<div class="col-sm-6 column text-center">
+						<div class="chart frontrunners behaviour"></div>
+						<h6>Behavior</h6>
+					</div>
+				</div>
+				
+				<div class="col-sm-2 column">
+						<h4>Peloton</h4>
+						<hr style="border-top: 1px solid #63ECFF;">
+						<div class="col-sm-6 column text-center">
+							<div class="chart peloton factor"></div>
+							<h6>Survey</h6>
+						</div>
+						<div class="col-sm-6 column text-center">
+							<div class="chart peloton behaviour"></div>
+							<h6>Behavior</h6>
+						</div>
+				</div>
+				
+				<div class="col-sm-2 column">
+						<h4>Rookies</h4>
+						<hr style="border-top: 1px solid #62FF86;">
+						<div class="col-sm-6 column text-center">
+							<div class="chart rookies factor"></div>
+							<h6>Survey</h6>
+						</div>
+						<div class="col-sm-6 column text-center">
+							<div class="chart rookies behaviour"></div>
+							<h6>Behavior</h6>
+						</div>
+				</div>
+				
+				<div class="col-sm-2 column">
+						<h4>Technology laggards</h4>
+						<hr style="border-top: 1px solid #D0FE63;">
+						<div class="col-sm-6 column text-center">
+							<div class="chart laggards factor"></div>
+							<h6>Survey</h6>
+						</div>
+						<div class="col-sm-6 column text-center">
+							<div class="chart laggards behaviour"></div>
+							<h6>Behavior</h6>
+						</div>
+				</div>
+
+				<div class="col-sm-2 column">
+						<h4>Observers</h4>
+						<hr style="border-top: 1px solid #FFBA63;">
+						<div class="col-sm-6 column text-center">
+							<div class="chart observers factor"></div>
+							<h6>Survey</h6>
+						</div>
+						<div class="col-sm-6 column text-center">
+							<div class="chart observers behaviour"></div>
+							<h6>Behavior</h6>
+						</div>
+				</div>
+						
+				<div class="col-sm-2 column">
+						<h4>Defensive line</h4>
+						<hr style="border-top: 1px solid #FF6364;">
+						<div class="col-sm-6 column text-center">
+							<div class="chart defensive factor"></div>
+							<h6>Survey</h6>
+						</div>
+						<div class="col-sm-6 column text-center">
+							<div class="chart defensive behaviour"></div>
+							<h6>Behavior</h6>
+						</div>
+				</div>	
+			</div>
+			
+			<div class="row text-center">
+				<div class="attribution">Deloitte  |  Workforce Analytics</div>
+			</div>
+	
+		</div>
+	</div>
+
+	<script>
+	
+var pauzeLoop, 
+	counter = 0;
+	
+//Function to start when clicked on a CAP
+function extendedClickFunction() {
+	//Clear the timeout if it is still running
+	if (typeof(pauzeLoop) != "undefined") clearTimeout(pauzeLoop);
+	//Pause the loop function
+	looping.pause();	
+	//Go to the clicked CAP
+	clickFunction(idByName[d3.select(this).attr("class")]);
+	//Start the loop again in 10 seconds
+	pauzeLoop = setTimeout(function() {
+		looping.play();
+	}, 15000);
+};
+
+//Loop through the different CAPs
+var looping = $.timer(function() {
+	counter = counter % 7;
+	clickFunction(CAPnames[counter]);
+	counter++;
+}, 8000, true);		
+
+var RadarChart = {
+  draw: function(id, d, options){
+	var cfg = {
+	 radius: 5,
+	 w: 600,
+	 h: 600,
+	 margin: {top: 20, right: 20, bottom: 20, left: 20},
+	 factor: 1,
+	 factorLegendX: 1,
+	 factorLegendY: 1,
+	 levels: 3,
+	 maxValue: 0,
+	 radians: 2 * Math.PI,
+	 opacityArea: 0.5,
+	 opacityCircles: 0.5,
+	 type: "normal",
+	 strokeWidth: 1,
+	 color: d3.scale.category10()
+	};
+	
+	if('undefined' !== typeof options){
+	  for(var i in options){
+		if('undefined' !== typeof options[i]){ cfg[i] = options[i]; }
+	  }//for i
+	}//if
+	cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
+	var allAxis = (d[0].map(function(i, j){return i.axis}));
+	var total = allAxis.length;
+	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
+	var Format = d3.format('%');
+	d3.select(id).select("svg").remove();
+	
+	//Initiate the radar chart SVG
+	var svg = d3.select(id).append("svg")
+			.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
+			.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
+			.attr("class", "radar"+id)
+			.on('click', extendedClickFunction);
+	//Append a g element		
+	var g = svg.append("g")
+			.attr("transform", "translate(" + cfg.margin.left + "," + cfg.margin.top + ")");
+	
+	//Filter for the outside glow
+	var filter = svg.append('defs').append('filter').attr('id','glow'),
+		feGaussianBlur = filter.append('feGaussianBlur').attr('stdDeviation','2.5').attr('result','coloredBlur'),
+		feMerge = filter.append('feMerge'),
+		feMergeNode_1 = feMerge.append('feMergeNode').attr('in','coloredBlur'),
+		feMergeNode_2 = feMerge.append('feMergeNode').attr('in','SourceGraphic');
+	
+	//The background circles as the grid
+	var levelFactor = cfg.factor*radius/cfg.levels;
+	var backgroundColors
+	g.selectAll(".levels")
+	   .data(d3.range(1,(cfg.levels+1)).reverse())
+	   .enter()
+		.append("circle")
+		.attr("class", "gridCircle")
+		.attr("transform", "translate(" + (cfg.w/2) + ", " + (cfg.h/2) + ")")
+		.attr("r", function(d, i){return levelFactor*d;})
+		.style("fill", "#CDCDCD")
+		.style("opacity", cfg.opacityCircles)
+		.style("filter" , "url(#glow)");
+
+	//Create the straight lines radiating outward from the center
+	var axis = g.selectAll(".axis")
+		.data(allAxis)
+		.enter()
+		.append("g")
+			.attr("class", "axis");
+	//Append the lines
+	axis.append("line")
+		.attr("x1", cfg.w/2)
+		.attr("y1", cfg.h/2)
+		.attr("x2", function(d, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
+		.attr("y2", function(d, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
+		.attr("class", "line")
+		.style("stroke", "white")
+		.style("stroke-width", cfg.strokeWidth+"px");
+
+	//Append the labels
+	if ( cfg.type === "big") {
+		axis.append("text")
+			.attr("class", "legend")
+			.style("font-size", "11px")
+			.attr("text-anchor", "middle")
+			.attr("dy", "0.35em")
+			.attr("transform", function(d, i){return "translate(0, -5)"})
+			.attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegendX*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
+			.attr("y", function(d, i){return cfg.h/2*(1-cfg.factorLegendY*Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);})
+			.text(function(d){return d})
+			.call(wrap, 60);
+	}//if
+
+	//The path functions for the blobs
+	var path = d3.svg.line()
+		.interpolate("cardinal-closed")
+		.x(function(d) { return d[0]; })
+		.y(function(d) { return d[1]; });
+
+				
+	var series = 0;
+	d.forEach(function(y, x){
+		dataValues = [];
+		g.selectAll(".nodes")
+			.data(y, function(j, i){
+			  dataValues.push([
+				cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)), 
+				cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
+			  ]);
+			});
+		//Create the blobs	
+		g.selectAll(".area")
+			.data([dataValues])
+			.enter()
+			.append("path")
+				.attr("class", "radar-chart-serie"+series)
+				//.style("stroke-width", "2px")
+				//.style("stroke", function(d) {						
+				//	if (typeof(cfg.color) != "function") return cfg.color;
+				//	else return cfg.color(series);
+				//})
+				.attr("d", path)
+				.style("fill", function(d) {
+					if (typeof(cfg.color) != "function") return cfg.color;
+					else return cfg.color(series);
+				})
+				.style("filter" , "url(#glow)")
+				.style("fill-opacity", cfg.opacityArea);
+		series++;
+	});
+
+  }//draw
+};
+
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = $(".chart.frontrunners").width() - margin.left - margin.right,
+    height = width;
+	
+var marginBig = {top: 100, right: 100, bottom: 100, left: 100},
+    widthBig = $(".bigChartF").width() - marginBig.left - marginBig.right,
+    heightBig = widthBig;
+	
+var maxValueChart = 6,
+	levelsChart = 6,
+	dotRadius = 2,
+	maxValueChartB = 1,
+	levelsChartB = 5;
+	
+//var color = d3.scale.ordinal()
+//	.domain(["Frontrunners","Peloton","Rookies","Technology laggards","Observers","Defensive Line"])
+//	.range(["#6363FF","#63ECFF","#62FF86","#D0FE63","#FFBA63","#FF6364"]);
+var color = ["#6363FF","#63ECFF","#62FF86","#D0FE63","#FFBA63","#FF6364"];
+	
+////////////////////////////////////////////////////////////// 
+////////////////////////// Data ////////////////////////////// 
+////////////////////////////////////////////////////////////// 
+
+//The behavior data - normalized - per CAP
+var behaviorCAPs = [
+	[//frontrunners
+		{axis:'Data usage laptop', value:0.5921},
+		{axis:'Data usage mobile', value:0.6624},
+		{axis:'Service desk calls', value:0.8434},
+		{axis:'Airmedia installations', value:0.4997},
+		{axis:'Sick calls', value:0.9228}
+	],
+	[//peloton
+		{axis:'Data usage laptop', value:0.6368},
+		{axis:'Data usage mobile', value:0.8097},
+		{axis:'Service desk calls', value:0.9152},
+		{axis:'Airmedia installations', value:0.6264},
+		{axis:'Sick calls', value:0.8261}
+	],
+	[//rookies
+		{axis:'Data usage laptop', value:0.7919},
+		{axis:'Data usage mobile', value:0.8836},
+		{axis:'Service desk calls', value:1},
+		{axis:'Airmedia installations', value:0.559},
+		{axis:'Sick calls', value:0.9164}
+	],
+	[//technology laggards
+		{axis:'Data usage laptop', value:0.616},
+		{axis:'Data usage mobile', value:0.7301},
+		{axis:'Service desk calls', value:0.866},
+		{axis:'Airmedia installations', value:0.7698},
+		{axis:'Sick calls', value:0.9547}
+	],
+	[//observers
+		{axis:'Data usage laptop', value:0.6261},
+		{axis:'Data usage mobile', value:0.7445},
+		{axis:'Service desk calls', value:0.8965},
+		{axis:'Airmedia installations', value:1},
+		{axis:'Sick calls', value:0.9286}
+	],
+	[//defensive line
+		{axis:'Data usage laptop', value:1},
+		{axis:'Data usage mobile', value:1},
+		{axis:'Service desk calls', value:0.8431},
+		{axis:'Airmedia installations', value:0.8542},
+		{axis:'Sick calls', value:1}
+	]	
+];
+
+//The factor analysis values resulting from the SOM segments
+var somCAPs = [
+	[//frontrunners
+		{axis:'Organizational commitment', value:5.5},
+		{axis:'Faith in Sr. leadership', value:4.9},
+		{axis:'Change attitude', value:5.3},
+		{axis:'Innovation & tenacity', value:5.5},
+		{axis:'Skill diversity', value:5.9},
+		{axis:'Believe in org. change', value:4.5},
+		{axis:'Behavioral intention', value:5.0},
+		{axis:'Openness to tech', value:3.8},
+		{axis:'Work autonomy', value:5.1}
+	],
+	[//peloton
+		{axis:'Organizational commitment ', value:4.9},
+		{axis:'Faith in Sr. leadership', value:4.6},
+		{axis:'Change attitude', value:5.0},
+		{axis:'Innovation & tenacity', value:5.2},
+		{axis:'Skill diversity', value:5.1},
+		{axis:'Believe in org. change', value:3.8},
+		{axis:'Behavioral intention', value:4.6},
+		{axis:'Openness to tech', value:4.0},
+		{axis:'Work autonomy', value:4.7}
+	],
+	[//rookies
+		{axis:'Organizational commitment ', value:4.3},
+		{axis:'Faith in Sr. leadership', value:4.1},
+		{axis:'Change attitude', value:4.4},
+		{axis:'Innovation & tenacity', value:4.9},
+		{axis:'Skill diversity', value:4.6},
+		{axis:'Believe in org. change', value:3.0},
+		{axis:'Behavioral intention', value:4.0},
+		{axis:'Openness to tech', value:3.7},
+		{axis:'Work autonomy', value:3.3}
+	],
+	[//technology laggards
+		{axis:'Organizational commitment ', value:4.9},
+		{axis:'Faith in Sr. leadership', value:4.6},
+		{axis:'Change attitude', value:4.0},
+		{axis:'Innovation & tenacity', value:5.0},
+		{axis:'Skill diversity', value:5.2},
+		{axis:'Believe in org. change', value:3.8},
+		{axis:'Behavioral intention', value:4.6},
+		{axis:'Openness to tech', value:2.1},
+		{axis:'Work autonomy', value:4.8}
+	],
+	[//observers
+		{axis:'Organizational commitment ', value:4.6},
+		{axis:'Faith in Sr. leadership', value:4.5},
+		{axis:'Change attitude', value:4.5},
+		{axis:'Innovation & tenacity', value:4.5},
+		{axis:'Skill diversity', value:5.0},
+		{axis:'Believe in org. change', value:3.6},
+		{axis:'Behavioral intention', value:3.6},
+		{axis:'Openness to tech', value:3.3},
+		{axis:'Work autonomy', value:4.6}
+	],
+	[//defensive line
+		{axis:'Organizational commitment ', value:3.0},
+		{axis:'Faith in Sr. leadership', value:2.7},
+		{axis:'Change attitude', value:4.0},
+		{axis:'Innovation & tenacity', value:5.1},
+		{axis:'Skill diversity', value:4.8},
+		{axis:'Believe in org. change', value:1.9},
+		{axis:'Behavioral intention', value:2.9},
+		{axis:'Openness to tech', value:3.5},
+		{axis:'Work autonomy', value:4.3}
+	]	
+];
+
+//Text that will be used to explain each segment
+addedText = [];
+addedText["frontrunners"] = "13% of the respondents are 'Frontrunners'. Employees in this segment are highly engaged and feel very comfortable with change within the " +
+							"organization. A changing organization can make use of their positive attitude by including them in the change process, for example by making them change ambassadors."
+addedText["peloton"] = "34% of the respondents (the largest profile segment) are part of 'The Peloton'. Employees in this segment feel comfortable with change within the organization and like " +
+					   "to try out new technologies. A changing organization can include them in the implementation as technology advocates, letting them test technology innovations first " +
+					   "and utilizing this segment as technology support agents or 'super users' that help to guide others with new technology.";
+addedText["rookies"] = "14% of the respondents are 'Rookies'. Employees in this segment are in the early stages of their career and experience less work autonomy than others. " +
+					   "They feel comfortable with change within the organization and have a slightly above average preference to try out new technology. A changing organization " +
+					   "can meet this segments’ needs by involving them in the latest technology releases along with the 'Peloton” segment and empowering them to become familiar " +
+					   "with technology before it is shared with a broader audience. Adding gamification components to get them familiar with new technology is also likely to appeal to this age demographic.";
+addedText["laggards"] = "20% of the respondents are 'Technology laggards'. Employees in this segment adopt technology slowly and are relatively uncomfortable with change within the " + 
+						"organization. A changing organization can support this segment by keeping technology explanations short and simple (KISS). Make sure to include this segment " +
+						"when all bugs are fixed and clearly communicate about go-to options (person/contact details/help line) for support.";
+addedText["observers"] = "14% of the respondents are 'Observers'. Employees in this segment feel fairly comfortable with change within the organization but feel less confident with " +
+						 "change and do not actively plan to participate in change activities. Due to the small segment size and moderate positive perceptions of this segment, large " +
+						 "investments in targeted interventions are less likely to reap large gains in technology adoption. Organization wide change and engagement activities should " +
+						 "suffice to keep this segment involved in the change process.";
+addedText["defensive"] = "6% of the respondents are part of the 'Defensive line'. Employees in this segment feel uncomfortable with change within the organization, are less engaged and do not " +
+						 "intend to actively support change activities. This segment has less positive perceptions of most aspects of their employment experience and targeted interventions toward " +
+						 "technology behavior are not likely to address underlying issues experienced by this segment. A changing organization should focus their change effort on the other segments " +
+					     "to increased adoption rates. Broader interventions should be reviewed with HR to address the experiences of this segment.";
+addedText["caps"] = "Text explaining CAPs";
+
+////////////////////////////////////////////////////////////// 
+///////////////////// Small chart //////////////////////////// 
+////////////////////////////////////////////////////////////// 
+
+/////////////////////// frontrunners /////////////////////////
+var frontrunnerOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChart,
+  levels: levelsChart,
+  color: "#6363FF"
+};
+RadarChart.draw(".chart.frontrunners.factor", [somCAPs[0]], frontrunnerOptions);
+var frontrunnerOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChartB,
+  levels: levelsChartB,
+  color: "#6363FF"
+};
+RadarChart.draw(".chart.frontrunners.behaviour", [behaviorCAPs[0]], frontrunnerOptions);
+
+/////////////////////// peloton /////////////////////////
+var pelotonOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChart,
+  levels: levelsChart,
+  color: "#63ECFF"
+};
+RadarChart.draw(".chart.peloton.factor", [somCAPs[1]], pelotonOptions);
+var pelotonOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChartB,
+  levels: levelsChartB,
+  color: "#63ECFF"
+};
+RadarChart.draw(".chart.peloton.behaviour", [behaviorCAPs[1]], pelotonOptions);
+
+/////////////////////// rookies /////////////////////////
+var rookiesOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChart,
+  levels: levelsChart,
+  color: "#62FF86"
+};
+RadarChart.draw(".chart.rookies.factor", [somCAPs[2]], rookiesOptions);
+var rookiesOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChartB,
+  levels: levelsChartB,
+  color: "#62FF86"
+};
+RadarChart.draw(".chart.rookies.behaviour", [behaviorCAPs[2]], rookiesOptions);
+
+/////////////////////// laggards /////////////////////////
+var laggardsOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChart,
+  levels: levelsChart,
+  color: "#D0FE63"
+};
+RadarChart.draw(".chart.laggards.factor", [somCAPs[3]], laggardsOptions);
+var laggardsOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChartB,
+  levels: levelsChartB,
+  color: "#D0FE63"
+};
+RadarChart.draw(".chart.laggards.behaviour", [behaviorCAPs[3]], laggardsOptions);
+
+/////////////////////// observers /////////////////////////
+var observersOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChart,
+  levels: levelsChart,
+  color: "#FFBA63"
+};
+RadarChart.draw(".chart.observers.factor", [somCAPs[4]], observersOptions);
+var observersOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChartB,
+  levels: levelsChartB,
+  color: "#FFBA63"
+};
+RadarChart.draw(".chart.observers.behaviour", [behaviorCAPs[4]], observersOptions);
+
+//////////////////// defensive line /////////////////////////
+var defensiveOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChart,
+  levels: levelsChart,
+
+  color: "#FF6364"
+};
+RadarChart.draw(".chart.defensive.factor", [somCAPs[5]], defensiveOptions);
+var defensiveOptions = {
+  w: width,
+  h: height,
+  margin: margin,
+  maxValue: maxValueChartB,
+  levels: levelsChartB,
+  color: "#FF6364"
+};
+RadarChart.draw(".chart.defensive.behaviour", [behaviorCAPs[5]], defensiveOptions);
+
+////////////////////////////////////////////////////////////// 
+////////////////////// Big Chart ///////////////////////////// 
+////////////////////////////////////////////////////////////// 
+var opacityBig = 0.85;
+
+var bigChartOptionsF = {
+  w: widthBig,
+  h: heightBig,
+  margin: marginBig,
+  maxValue: maxValueChart,
+  levels: levelsChart,
+  factorLegendX: 0.9,
+  factorLegendY: 1.2,
+  opacityArea: opacityBig,
+  opacityCircles: 0.2,
+  type: "big",
+  strokeWidth: 2,
+  color: function(d){return color[d];}
+};
+//Call function to draw the Radar chart
+RadarChart.draw(".bigChartF", somCAPs, bigChartOptionsF);
+
+var bigChartOptionsB = {
+  w: widthBig,
+  h: heightBig,
+  margin: marginBig,
+  maxValue: maxValueChartB,
+  levels: levelsChartB,
+  factorLegendX: 0.9,
+  factorLegendY: 1.1,
+  opacityArea: opacityBig,
+  opacityCircles: 0.2,
+  type: "big",
+  strokeWidth: 2,
+  color: function(d){return color[d];}
+};
+//Call function to draw the Radar chart
+RadarChart.draw(".bigChartB", behaviorCAPs, bigChartOptionsB);
+
+
+////////////////////////////////////////////////////////////// 
+////////// Small lines showing averages per CAP ////////////// 
+////////////////////////////////////////////////////////////// 
+
+var marginExtra = {top: 10, right: 40, bottom: 10, left: 10},
+    widthExtra = $(".extraInsights").width() - marginExtra.left - marginExtra.right,
+    heightExtra = 265;
+
+var extraChartsSVG = d3.select(".extraInsights").append("svg")
+	.attr("width",  widthExtra + marginExtra.left + marginExtra.right)
+	.attr("height", heightExtra + marginExtra.top + marginExtra.bottom)
+	.attr("class", "extraChartsSVG")
+
+var extraCharts = extraChartsSVG.append("g").attr("class", "extraChartsWrapper")
+		.attr("transform", "translate(" + marginExtra.left + "," + marginExtra.top + ")");
+		
+
+/////////////////////// Average Age ///////////////////////////	
+var rangeAges = [20, 50];
+var avgAges = [39.4, 35.5, 33.0, 36.2, 34.1, 35.8];
+
+var ages = extraCharts.append("g").attr("class", "extraCharts ages")
+		.attr("transform", "translate(" + 0 + "," + 25 + ")");
+
+var agesScale = d3.scale.linear()
+		.range([0, widthExtra])
+		.domain(rangeAges);
+
+//Full grey line		
+ages.append("line")
+	.attr("x1", 0)
+	.attr("y1", 0)
+	.attr("x2", widthExtra)
+	.attr("y2", 0)
+	.attr("class", "extraLine full");
+//Colored line up to the value
+ages.append("line")
+	.attr("x1", 0)
+	.attr("y1", 0)
+	.attr("x2", 0)
+	.attr("y2", 0)
+	.attr("class", "extraLine cap")
+	//.style("stroke-width", 1.5)
+	.style("opacity", 0.8);
+//Circle at the value
+ages.append("circle")
+	.attr("cx", 0)
+	.attr("cy", 0)
+	.attr("r", 10)
+	.attr("class", "extraCircle")
+	.style("fill", "white");
+//Title above line
+ages.append("text")
+	.attr("x", 0)
+	.attr("y", -25)
+	.attr("class", "extraTitle")
+	.text("Gemiddelde Leeftijd");
+//Text below line
+ages.append("text")
+	.attr("x", agesScale(20))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("20");
+ages.append("text")
+	.attr("x", agesScale(30))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("30");
+ages.append("text")
+	.attr("x", agesScale(40))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("40");
+ages.append("text")
+	.attr("x", agesScale(50))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("50");
+	
+//Circles for all caps
+ages.selectAll(".extraCircleAll")
+	.data(avgAges)
+	.enter().append("circle")
+	.attr("class", "extraCircleAll")
+	.attr("cx", function(d, i) { return agesScale(d); })
+	.attr("cy", 0)
+	.attr("r", 10)	
+	.style("fill", function(d, i) { return color[i]; });
+	
+/////////////////////// Median age at company ///////////////////////////	
+var rangeYearsAtCompany = [2, 8];
+var medianYearsAtCompany = [6.9, 5.0, 4.6, 5.9, 4.9, 5.4];
+
+var years = extraCharts.append("g").attr("class", "extraCharts years")
+		.attr("transform", "translate(" + 0 + "," + 125 + ")");
+
+var yearsScale = d3.scale.linear()
+		.range([0, widthExtra])
+		.domain(rangeYearsAtCompany);
+
+//Full grey line		
+years.append("line")
+	.attr("x1", 0)
+	.attr("y1", 0)
+	.attr("x2", widthExtra)
+	.attr("y2", 0)
+	.attr("class", "extraLine full");
+//Colored line up to the value
+years.append("line")
+	.attr("x1", 0)
+	.attr("y1", 0)
+	.attr("x2", 0)
+	.attr("y2", 0)
+	.attr("class", "extraLine cap")
+	.style("opacity", 0.8);
+//Circle at the value
+years.append("circle")
+	.attr("cx", 0)
+	.attr("cy", 0)
+	.attr("r", 10)
+	.attr("class", "extraCircle")
+	.style("fill", "white");
+//Title above line
+years.append("text")
+	.attr("x", 0)
+	.attr("y", -25)
+	.attr("class", "extraTitle")
+	.text("Aantal jaar bij Deloitte");
+//Text below line
+years.append("text")
+	.attr("x", yearsScale(2))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("2");
+years.append("text")
+	.attr("x", yearsScale(4))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("4");
+years.append("text")
+	.attr("x", yearsScale(6))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("6");
+years.append("text")
+	.attr("x", yearsScale(8))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("8");
+
+//Circles for all caps
+years.selectAll(".extraCircleAll")
+	.data(medianYearsAtCompany)
+	.enter().append("circle")
+	.attr("class", "extraCircleAll")
+	.attr("cx", function(d, i) { return yearsScale(d); })
+	.attr("cy", 0)
+	.attr("r", 10)	
+	.style("fill", function(d, i) { return color[i]; });
+	
+/////////////////////// Median age at company ///////////////////////////	
+var rangeJobLevel = [1,4];
+var medianJobLevel = [3.55, 2.56, 1.87, 2.54, 2.09, 2.47];
+
+var level = extraCharts.append("g").attr("class", "extraCharts level")
+		.attr("transform", "translate(" + 0 + "," + 225 + ")");
+
+var levelScale = d3.scale.linear()
+		.range([0, widthExtra])
+		.domain(rangeJobLevel);
+
+//Full grey line		
+level.append("line")
+	.attr("x1", 0)
+	.attr("y1", 0)
+	.attr("x2", widthExtra)
+	.attr("y2", 0)
+	.attr("class", "extraLine full");
+//Colored line up to the value
+level.append("line")
+	.attr("x1", 0)
+	.attr("y1", 0)
+	.attr("x2", 0)
+	.attr("y2", 0)
+	.attr("class", "extraLine cap")
+	.style("opacity", 0.8);
+//Circle at the value
+level.append("circle")
+	.attr("cx", 0)
+	.attr("cy", 0)
+	.attr("r", 10)
+	.attr("class", "extraCircle")
+	.style("fill", "white");
+//Title above line
+level.append("text")
+	.attr("x", 0)
+	.attr("y", -25)
+	.attr("class", "extraTitle")
+	.text("Job Level");
+//Text below line
+level.append("text")
+	.attr("x", levelScale(1))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("Laag");
+level.append("text")
+	.attr("x", levelScale(4))
+	.attr("y", 25)
+	.attr("class", "extraText")
+	.text("Hoog");
+
+//Circles for all caps
+level.selectAll(".extraCircleAll")
+	.data(medianJobLevel)
+	.enter().append("circle")
+	.attr("class", "extraCircleAll")
+	.attr("cx", function(d, i) { return levelScale(d); })
+	.attr("cy", 0)
+	.attr("r", 10)	
+	.style("fill", function(d, i) { return color[i]; });
+	
+////////////////////////////////////////////////////////////// 
+//////////////// Loop functionalities //////////////////////// 
+////////////////////////////////////////////////////////////// 
+
+//Frontrunners: #6363FF
+//Peloton: #63ECFF
+//Rookies: #62FF86
+//Technology laggards: #D0FE63
+//Observers: #FFBA63
+//Defensive Line: #FF6364
+
+var CAPnames = ["frontrunners","peloton","rookies","laggards","observers","defensive","caps"];
+var CAPnamesFull = ["Frontrunners","Peloton","Rookies","Technology laggards","Observers","Defensive Line","The CAPs"]; 
+
+//Attach classes to the bigger blobs
+d3.select(".bigChartF").selectAll("path")
+	.attr("class", function(d,i) {d.class = CAPnames[i]; return CAPnames[i]; });
+d3.select(".bigChartB").selectAll("path")
+	.attr("class", function(d,i) {d.class = CAPnames[i]; return CAPnames[i]; });
+
+//Needed for the click function
+var idByName = [];
+idByName["radar.chart.frontrunners.factor"] = CAPnames[0];
+idByName["radar.chart.frontrunners.behaviour"] = CAPnames[0];
+idByName["radar.chart.peloton.factor"] = CAPnames[1];
+idByName["radar.chart.peloton.behaviour"] = CAPnames[1];
+idByName["radar.chart.rookies.factor"] = CAPnames[2];
+idByName["radar.chart.rookies.behaviour"] = CAPnames[2];
+idByName["radar.chart.laggards.factor"] = CAPnames[3];
+idByName["radar.chart.laggards.behaviour"] = CAPnames[3];
+idByName["radar.chart.observers.factor"] = CAPnames[4];
+idByName["radar.chart.observers.behaviour"] = CAPnames[4];
+idByName["radar.chart.defensive.factor"] = CAPnames[5];
+idByName["radar.chart.defensive.behaviour"] = CAPnames[5];
+
+//Color based on the CAPnames
+var colorByName = [];
+for(var i = 0; i < color.length; i++ ) colorByName[CAPnames[i]] = i;
+
+//Full names for the titles
+var CAPByName = [];
+for(var i = 0; i < CAPnames.length; i++ ) CAPByName[CAPnames[i]] = CAPnamesFull[i];
+
+//Adjust sizes of the small boxes at the bottom
+var docHeight = $(window).height();
+var footerHeight = $('#smallBoxes').height();
+var footerTop = $('#smallBoxes').position().top + footerHeight;
+$('#smallBoxes').css('margin-top', -50 + (docHeight - footerTop) + 'px');
+
+//Adjust the width of the image
+var imgWidth = $('.imgDiv').width();
+$('.CAPimage').attr('width', imgWidth);
+$('.CAPimage').css('margin-top', (($('.extraInsights').height() - $('.CAPimage').height())/2) + 'px');
+	
+function clickFunction(chosen) {
+	
+	if (chosen === undefined) var chosen = idByName[d3.select(this).attr("class")];
+		
+	//Change the text and titles
+	d3.select(".bigChartTitle").html(CAPByName[chosen]);
+	d3.select(".bigChartText").html(addedText[chosen]);
+	
+	d3.select(".CAPimage").transition().duration(400).style("opacity", 0);
+	setTimeout( function() { 
+		d3.select(".CAPimage").attr("src", "img/" + chosen + ".png");
+		$('.CAPimage').css('margin-top', (($('.extraInsights').height() - $('.CAPimage').height())/2) + 'px'); 
+	}, 400);
+	d3.select(".CAPimage").transition().duration(400).delay(500).style("opacity", 1);
+	
+	
+	if (chosen != "caps") {
+	
+		//Chart of Factor analysis
+		d3.select(".bigChartF").selectAll("path")
+			.filter(function(d,i) {return d.class != chosen; })
+			.transition().duration(750)
+			//.style("fill", "#B3B3B3")
+			.style("opacity", 0.1);
+		d3.select(".bigChartF").selectAll("path")
+			.filter(function(d,i) {return d.class === chosen; })
+			.moveToFront()
+			.transition().duration(750)
+			//.style("fill", color[colorByName[chosen]])
+			.style("opacity", opacityBig);
+		
+		//Chart of behavior		
+		d3.select(".bigChartB").selectAll("path")
+			.filter(function(d,i) {return d.class != chosen; })
+			.transition().duration(750)
+			//.style("fill", "#B3B3B3")
+			.style("opacity", 0.1);
+		d3.select(".bigChartB").selectAll("path")
+			.filter(function(d,i) {return d.class === chosen; })
+			.moveToFront()
+			.transition().duration(750)
+			//.style("fill", color[colorByName[chosen]])
+			.style("opacity", opacityBig);	
+			
+		////////////// Extra range charts //////////////////
+		//Hide all the circles and show the CAP circles
+		extraCharts.selectAll(".extraCircleAll").style("visibility", "hidden");
+		extraCharts.selectAll(".extraCircle").style("visibility", "visible");
+		extraCharts.selectAll(".extraLine.cap").style("visibility", "visible");		
+		//Age
+		ages.selectAll(".extraCircle")
+			.transition().duration(750)
+			.attr("cx", agesScale(avgAges[colorByName[chosen]]))
+			.style("fill",  color[colorByName[chosen]]);
+		ages.selectAll(".extraLine.cap")
+			.transition().duration(750)
+			.attr("x1", agesScale(avgAges[colorByName[chosen]]))
+			.style("stroke",  color[colorByName[chosen]]);	
+		//Years at company
+		years.selectAll(".extraCircle")
+			.transition().duration(750)
+			.attr("cx", yearsScale(medianYearsAtCompany[colorByName[chosen]]))
+			.style("fill",  color[colorByName[chosen]]);
+		years.selectAll(".extraLine.cap")
+			.transition().duration(750)
+			.attr("x1", yearsScale(medianYearsAtCompany[colorByName[chosen]]))
+			.style("stroke",  color[colorByName[chosen]]);	
+		//Job Level
+		level.selectAll(".extraCircle")
+			.transition().duration(750)
+			.attr("cx", levelScale(medianJobLevel[colorByName[chosen]]))
+			.style("fill",  color[colorByName[chosen]]);
+		level.selectAll(".extraLine.cap")
+			.transition().duration(750)
+			.attr("x1", levelScale(medianJobLevel[colorByName[chosen]]))
+			.style("stroke",  color[colorByName[chosen]]);					
+			
+	} else { 
+		//Show all slices
+		d3.select(".bigChartF").selectAll("path")
+			.transition().duration(750)
+			.style("opacity", 0.9);
+					
+		d3.select(".bigChartB").selectAll("path")
+			.transition().duration(750)
+			.style("opacity", 0.9);
+
+		//Show all the circles and hide the CAP circles
+		extraCharts.selectAll(".extraCircleAll").style("visibility", "visible");
+		extraCharts.selectAll(".extraCircle").style("visibility", "hidden");
+		extraCharts.selectAll(".extraLine.cap").style("visibility", "hidden");			
+	} //else
+
+			
+}//clickFunction
+
+//Bring the clicked CAP to the front
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};		
+
+//Taken from http://bl.ocks.org/mbostock/7555321
+//Wraps SVG text	
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.4, // ems
+        y = text.attr("y"),
+		x = text.attr("x"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+		
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+}//wrap
+
+    </script>
+  </body>
+</html>
